@@ -1,7 +1,7 @@
 // Trip Tips and Tools — Expense Tool v3.1
 // Backend: existing Render/FastAPI at vacation-splitter.onrender.com
 
-const API_BASE = "https://vacation-splitter.onrender.com";
+const API_BASE = "";
 
 document.addEventListener("DOMContentLoaded", () => {
   const $ = (id) => document.getElementById(id);
