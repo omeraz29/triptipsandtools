@@ -1,17 +1,4 @@
-import { getStore } from "@netlify/blobs";
-
 export default async (req) => {
-  const store = getStore("itinerary-index");
-  const dynamicItineraries = await store.get("index", { type: "json" }) || [];
-
-  const cards = dynamicItineraries.map(item => `
-      <div class="feature">
-        <div class="title">${item.title}</div>
-        <p class="desc">${item.description}</p>
-        <div style="height:10px"></div>
-        <a class="btn ghost" href="/itineraries/${item.slug}">View itinerary</a>
-      </div>`).join("\n");
-
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -63,13 +50,24 @@ export default async (req) => {
           <a class="btn ghost" href="/japan-itinerary.html">View itinerary</a>
         </div>
       </div>
-      ${cards}
+      <div class="feature">
+        <div class="title">Costa Rica (9 Days)</div>
+        <p class="desc">San José → Manuel Antonio → Monteverde → Arenal → Tamarindo. Car rental, ziplining, volcano, hot springs, Pacific beach.</p>
+        <div style="height:10px"></div>
+        <a class="btn ghost" href="/costa-rica-itinerary.html">View itinerary</a>
+      </div>
+      <div class="feature">
+        <div class="title">Spain (10 Days)</div>
+        <p class="desc">Barcelona → Palma de Mallorca → Madrid. Gaudí, Mediterranean beaches, hidden coves, and world-class nightlife.</p>
+        <div style="height:10px"></div>
+        <a class="btn ghost" href="/spain-itinerary.html">View itinerary</a>
+      </div>
     </div>
     <div style="height:14px"></div>
     <div class="notice">New itineraries are added regularly. Check back for more destinations!</div>
   </div>
   <div class="container footer">
-    <div class="muted">Tip: You can later turn each destination into its own page for SEO + affiliate links.</div>
+    <div class="muted">This site contains affiliate links. We may earn a small commission if you book through them, at no extra cost to you.</div>
   </div>
 </body>
 </html>`;
