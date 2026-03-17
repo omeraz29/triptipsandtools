@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peru Itinerary • Trip Tips and Tools</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a0e05;
+      --surface: #241408;
+      --surface2: #2e1a0c;
+      --border: #4a2e12;
+      --accent: #c97d3a;
+      --accent2: #e09a52;
+      --accent3: #f2be80;
+      --text: #fdf4e8;
+      --text-muted: #c4956a;
+      --text-dim: #7a5030;
+      --gold: #f4d03f;
+      --danger: #fca5a5;
+      --header-bg: #120a02;
+    }
+
+    body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
+    nav { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { font-family: 'Georgia', serif; font-size: 1rem; font-weight: bold; color: var(--accent2); text-decoration: none; letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-family: sans-serif; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent2); }
+    .hero { background: linear-gradient(135deg, #120a02 0%, #1e1005 40%, #1a0e05 70%, #0e0a14 100%); border-bottom: 1px solid var(--border); padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 40% 50%, rgba(201,125,58,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(244,208,63,0.06) 0%, transparent 50%); pointer-events: none; }
+    .hero-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text); font-weight: normal; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .hero h1 span { color: var(--accent2); }
+    .hero-subtitle { color: var(--text-muted); font-family: sans-serif; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero-route { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem 1.2rem; font-family: sans-serif; font-size: 0.85rem; color: var(--accent3); flex-wrap: wrap; justify-content: center; }
+    .hero-route span { color: var(--text-dim); }
+    .toolbar { max-width: 900px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .back-link { color: var(--accent2); text-decoration: none; font-family: sans-serif; font-size: 0.875rem; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .print-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: sans-serif; font-size: 0.8rem; padding: 0.4rem 1rem; border-radius: 0.25rem; cursor: pointer; transition: all 0.2s; }
+    .print-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+    main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .city-divider { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.5rem; }
+    .city-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .city-divider-label { font-family: sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); white-space: nowrap; padding: 0.3rem 0.8rem; border: 1px solid var(--border); border-radius: 2rem; background: var(--surface2); }
+    .day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; margin-bottom: 1.5rem; overflow: hidden; }
+    .day-header { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+    .day-badge { background: var(--accent); color: #120a02; font-family: sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 0.2rem; white-space: nowrap; }
+    .day-title { font-size: 1.05rem; font-weight: normal; color: var(--text); }
+    .day-location { font-family: sans-serif; font-size: 0.78rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+    .day-body { padding: 1.25rem 1.5rem; }
+    .section-block { margin-bottom: 1.25rem; }
+    .section-block:last-child { margin-bottom: 0; }
+    .section-label { font-family: sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+    .section-label::before { content: ''; display: inline-block; width: 12px; height: 1px; background: var(--text-dim); }
+    .activity-list { list-style: none; padding: 0; }
+    .activity-list li { padding: 0.3rem 0 0.3rem 1.2rem; position: relative; font-size: 0.95rem; color: var(--text); border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .activity-list li:last-child { border-bottom: none; }
+    .activity-list li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+    .activity-list li small { color: var(--text-muted); font-family: sans-serif; font-size: 0.8rem; }
+    .note-block { background: rgba(201,125,58,0.07); border-left: 3px solid var(--accent); border-radius: 0 0.4rem 0.4rem 0; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+    .note-block p { font-family: sans-serif; font-size: 0.875rem; color: var(--text-muted); }
+    .note-block strong { color: var(--accent3); }
+    .warning-block { background: rgba(244,208,63,0.06); border-left: 3px solid var(--gold); border-radius: 0 0.4rem 0.4rem 0; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+    .warning-block p { font-family: sans-serif; font-size: 0.875rem; color: #c8a84a; }
+    .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    @media (max-width: 540px) { .bottom-row { grid-template-columns: 1fr; } }
+    .info-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem 1rem; }
+    .info-chip-label { font-family: sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem; }
+    .info-chip-value { font-family: sans-serif; font-size: 0.875rem; color: var(--text); }
+    .info-chip-value a { color: var(--accent2); font-size: 0.8rem; display: block; text-decoration: none; margin-top: 0.2rem; }
+    .info-chip-value a:hover { color: var(--accent); }
+    .cost-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem 1rem; }
+    .cost-chip-label { font-family: sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem; }
+    .cost-items { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .cost-tag { background: rgba(201,125,58,0.12); border: 1px solid rgba(201,125,58,0.25); border-radius: 0.2rem; padding: 0.15rem 0.5rem; font-family: sans-serif; font-size: 0.78rem; color: var(--accent3); white-space: nowrap; }
+    .booking-section { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin-top: 2rem; }
+    .booking-section h2 { font-size: 1.1rem; font-weight: normal; color: var(--text); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .booking-priority { margin-bottom: 1.25rem; }
+    .priority-label { font-family: sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .priority-label.high { color: var(--danger); }
+    .priority-label.medium { color: var(--gold); }
+    .priority-label.low { color: var(--text-muted); }
+    .booking-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.4rem; }
+    .booking-list li { font-family: sans-serif; font-size: 0.875rem; color: var(--text); padding: 0.3rem 0.6rem; background: var(--surface2); border-radius: 0.3rem; border: 1px solid var(--border); }
+    .page-footer { max-width: 900px; margin: 0 auto; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 0.75rem; }
+    .back-to-top { font-family: sans-serif; font-size: 0.8rem; color: var(--text-dim); cursor: pointer; background: none; border: none; transition: color 0.2s; }
+    .back-to-top:hover { color: var(--accent2); }
+    .affiliate-note { font-family: sans-serif; font-size: 0.78rem; color: var(--text-dim); text-align: center; padding: 0.5rem 1.5rem 2rem; max-width: 900px; margin: 0 auto; }
+    @media print { nav, .toolbar .print-btn { display: none; } .day-card { break-inside: avoid; } body { background: white; color: black; } }
+    @media (max-width: 600px) { .hero { padding: 2rem 1rem 1.5rem; } main { padding: 0 1rem 3rem; } .day-body { padding: 1rem; } nav { padding: 0 1rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="https://triptipsandtools.netlify.app/">Trip Tips and Tools</a>
+  <div class="nav-links">
+    <a href="https://triptipsandtools.netlify.app/itineraries">Itineraries</a>
+    <a href="https://triptipsandtools.netlify.app/expense-tool.html">Expense Tool</a>
+    <a href="https://triptipsandtools.netlify.app/">Home</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-flag">🇵🇪</div>
+  <h1>Peru Itinerary <span>(10 Days)</span></h1>
+  <p class="hero-subtitle">Inca Ruins, Sacred Mountains &amp; Pacific Coast</p>
+  <div class="hero-route">
+    Cusco <span>→</span> Sacred Valley <span>→</span> Machu Picchu <span>→</span> Lima
+  </div>
+</div>
+
+<div class="toolbar">
+  <a class="back-link" href="https://triptipsandtools.netlify.app/itineraries">← Back to Itineraries</a>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<main>
+
+  <div class="city-divider">
+    <div class="city-divider-line"></div>
+    <div class="city-divider-label">Cusco — Days 1–4</div>
+    <div class="city-divider-line"></div>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 1</span>
+      <span class="day-title">Arrival Cusco — Acclimatize + Old City Exploration</span>
+      <span class="day-location">Cusco</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Arrival</div>
+        <ul class="activity-list">
+          <li>Fly into Alejandro Velasco Astete International Airport (CUZ) <small>(~1.5 hr from Lima)</small></li>
+          <li>Check into hotel and rest — acclimatization is essential <small>(~2 hr)</small></li>
+          <li>Cusco sits at 3,400m (11,150 ft) — altitude sickness is real, take it slow on Day 1</li>
+        </ul>
+      </div>
+      <div class="warning-block">
+        <p><strong>⚠ Altitude Warning:</strong> Cusco is one of the highest cities in the world. Drink plenty of water, avoid alcohol on Day 1, and consider altitude sickness medication (Acetazolamide) prescribed before your trip. Most people feel fine after 24–48 hrs.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Gentle walk around Plaza de Armas — Cusco's stunning main square <small>(~1 hr)</small></li>
+          <li>Cusco Cathedral — one of the most impressive Spanish colonial cathedrals in the Americas <small>(~1 hr)</small></li>
+          <li>Qorikancha — Inca Temple of the Sun, partially preserved beneath a colonial church <small>(~45 min)</small></li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Coca Tea:</strong> Offered everywhere in Cusco — locals swear by it for altitude sickness. It's made from coca leaves, legal in Peru, and genuinely helps with acclimatization.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Light dinner in San Blas neighborhood — Cusco's bohemian artisan quarter <small>(~1.5 hr)</small></li>
+          <li>Try lomo saltado, ceviche, or quinoa soup — take it easy on food portions tonight</li>
+          <li>Early rest — big days ahead</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Cusco
+            <a href="https://expedia.com/affiliates/hotel-search-cusco.wc3GBJK" target="_blank">Book Cusco Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Cathedral: S/25</span>
+            <span class="cost-tag">Qorikancha: S/15</span>
+            <span class="cost-tag">Food: $20–35</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 2</span>
+      <span class="day-title">Sacsayhuamán + San Blas + Inca Ruins</span>
+      <span class="day-location">Cusco</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li><strong>Sacsayhuamán</strong> — massive Inca fortress overlooking Cusco, 30 min walk uphill from the plaza <small>(~2 hr)</small></li>
+          <li>Enormous stone walls — some blocks weigh over 100 tons, baffling engineers to this day</li>
+          <li>Panoramic views over Cusco from the top</li>
+          <li>Also visit Qenqo, Puka Pukara, and Tambomachay on the same circuit <small>(~1.5 hr combined)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Lunch in San Blas — try a set lunch menu (menú del día) for $3–5 <small>(~1 hr)</small></li>
+          <li>Explore San Blas neighborhood — whitewashed walls, artisan workshops, narrow cobblestone streets <small>(~1.5 hr)</small></li>
+          <li>San Blas church — stunning carved pulpit considered one of the finest in the Americas <small>(~30 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Dinner at Cicciolina or MAP Café — two of Cusco's best restaurants <small>(~1.5 hr)</small></li>
+          <li>Try pisco sour — Peru's national cocktail</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Boleto Turístico:</strong> The tourist ticket (~$40) covers Sacsayhuamán and most Cusco area ruins. Worth buying if you plan to visit multiple sites — available at the COSITUC office near Plaza de Armas.</p>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Cusco
+            <a href="https://expedia.com/affiliates/hotel-search-cusco.wc3GBJK" target="_blank">Book Cusco Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Boleto Turístico: ~$40</span>
+            <span class="cost-tag">Food: $20–45</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 3</span>
+      <span class="day-title">Sacred Valley — Pisac + Ollantaytambo</span>
+      <span class="day-location">Sacred Valley</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Hire a private driver or join a tour from Cusco to the Sacred Valley <small>(~1.5 hr drive)</small></li>
+          <li><strong>Pisac Ruins</strong> — dramatic hilltop Inca citadel with terraced agriculture and stunning valley views <small>(~2 hr)</small></li>
+          <li>Pisac Market below the ruins — one of Peru's best artisan markets for textiles and crafts <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Lunch at a local restaurant in the valley <small>(~1 hr)</small></li>
+          <li><strong>Ollantaytambo</strong> — the best-preserved Inca town in Peru, still inhabited since Inca times <small>(~2 hr)</small></li>
+          <li>Massive sun temple fortress — steep terraced walls rising dramatically above the town</li>
+          <li>Walk the original Inca streets through the living town below the ruins</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Optional Stops</div>
+        <ul class="activity-list">
+          <li>Moray — mysterious circular Inca agricultural terraces <small>(~45 min)</small></li>
+          <li>Maras salt mines — thousands of terraced salt pools still harvested today <small>(~30 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Return to Cusco by evening <small>(~1.5 hr)</small></li>
+          <li>Dinner in the Plaza de Armas area <small>(~1.5 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Cusco
+            <a href="https://expedia.com/affiliates/hotel-search-cusco.wc3GBJK" target="_blank">Book Cusco Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Private driver: $50–80</span>
+            <span class="cost-tag">Site entries: $10–20</span>
+            <span class="cost-tag">Food: $20–35</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 4</span>
+      <span class="day-title">Rainbow Mountain</span>
+      <span class="day-location">Vinicunca</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Full Day</div>
+        <ul class="activity-list">
+          <li>Depart Cusco early — most tours leave by 4:30–5 AM <small>(~3 hr drive to trailhead)</small></li>
+          <li><strong>Rainbow Mountain (Vinicunca)</strong> — multicolored mineral stripes across a 5,200m mountain face <small>(~4–5 hr hiking)</small></li>
+          <li>Colors range from deep reds to yellows, greens, and purples — genuinely breathtaking</li>
+          <li>Lunch and snacks included with most tours</li>
+        </ul>
+      </div>
+      <div class="warning-block">
+        <p><strong>⚠ Altitude + Fitness:</strong> This is a strenuous hike at very high altitude. Horses available along the trail if needed (~$15). Not recommended for those with heart or respiratory conditions.</p>
+      </div>
+      <div class="note-block">
+        <p><strong>Best Time:</strong> May–October is dry season and the best time to hike. Always bring layers as temperatures drop dramatically at altitude even in summer.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Return to Cusco by late afternoon <small>(~3 hr drive)</small></li>
+          <li>Rest and recovery dinner — you've earned it <small>(~1.5 hr)</small></li>
+          <li>Pack for Machu Picchu tomorrow</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Cusco
+            <a href="https://expedia.com/affiliates/hotel-search-cusco.wc3GBJK" target="_blank">Book Cusco Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Tour (incl. transport): $25–45</span>
+            <span class="cost-tag">Horse (optional): $15</span>
+            <span class="cost-tag">Food: $15–25</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-divider">
+    <div class="city-divider-line"></div>
+    <div class="city-divider-label">Machu Picchu — Days 5–7</div>
+    <div class="city-divider-line"></div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 5</span>
+      <span class="day-title">Train to Aguas Calientes + First Visit to Machu Picchu</span>
+      <span class="day-location">Cusco → Aguas Calientes</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out of Cusco hotel and transfer to Ollantaytambo train station <small>(~1.5 hr)</small></li>
+          <li>Board the PeruRail or Inca Rail train to Aguas Calientes <small>(~1.5 hr)</small></li>
+          <li>Stunning journey through the Sacred Valley, cloud forest, and jungle as you descend in altitude</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Train Booking:</strong> Book as early as possible — they sell out months ahead. The Vistadome train has panoramic windows and is worth the upgrade. Both PeruRail and Inca Rail are reliable.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Arrive Aguas Calientes and check into hotel <small>(~20 min)</small></li>
+          <li>Take the afternoon bus up to Machu Picchu for a first visit <small>(~30 min bus)</small></li>
+          <li><strong>First look at Machu Picchu</strong> — take your time exploring the citadel <small>(~3 hr)</small></li>
+          <li>Classic viewpoint at the Sun Gate trail entrance for the iconic photo</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Return to Aguas Calientes by bus <small>(~30 min)</small></li>
+          <li>Dinner along the main street — fresh trout from the local rivers is a specialty <small>(~1.5 hr)</small></li>
+          <li>Aguas Calientes hot springs — natural thermal baths perfect after hiking <small>(~1 hr)</small></li>
+          <li>Early rest — sunrise at Machu Picchu tomorrow</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Aguas Calientes
+            <a href="https://expedia.com/affiliates/hotel-search-machu-picchu.3L3N316" target="_blank">Book Aguas Calientes Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Train: $50–120</span>
+            <span class="cost-tag">Bus up/down: $24</span>
+            <span class="cost-tag">Entry: $50–65</span>
+            <span class="cost-tag">Food: $20–35</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 6</span>
+      <span class="day-title">Machu Picchu — Sunrise + Full Exploration</span>
+      <span class="day-location">Machu Picchu</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Sunrise — Must Not Miss</div>
+        <ul class="activity-list">
+          <li>Wake up at 4:30 AM — catch the first bus up at 5:30 AM <small>(~30 min bus)</small></li>
+          <li><strong>Sunrise at Machu Picchu</strong> — clouds roll through the ruins as the sun rises over the mountains</li>
+          <li>One of the most extraordinary sights in the world — this is the moment you came for</li>
+          <li>Arrive before the crowds — the site fills up by 9–10 AM</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Entry is strictly timed and limited.</strong> Book tickets months ahead at machupicchu.gob.pe — slots sell out fast. Choose Circuit 1 (classic overview) for your first visit. A licensed guide (~$20–30) is highly recommended.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Morning — Full Exploration</div>
+        <ul class="activity-list">
+          <li>Temple of the Sun — the finest stonework in all of Machu Picchu <small>(~30 min)</small></li>
+          <li>Intihuatana stone — the sacred "hitching post of the sun" used for astronomical purposes <small>(~20 min)</small></li>
+          <li>Temple of the Three Windows — one of the most photographed spots <small>(~20 min)</small></li>
+          <li>Agricultural terraces — stunning farming platforms carved into the mountainside <small>(~45 min)</small></li>
+          <li>Sun Gate (Inti Punku) trail — 45 min hike for the classic panoramic view <small>(~1.5 hr round trip)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Lunch at Tinkuy Buffet — the only restaurant inside the ruins <small>(~1 hr)</small></li>
+          <li>Huayna Picchu mountain — short steep climb for aerial views of the citadel <small>(~2 hr — book separately)</small></li>
+          <li>Return to Aguas Calientes by afternoon bus <small>(~30 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Inca Bridge trail — short hike to a suspension bridge built into a cliff face <small>(~45 min)</small></li>
+          <li>Machu Picchu Mountain — longer climb with wider views than Huayna Picchu <small>(~3 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Aguas Calientes
+            <a href="https://expedia.com/affiliates/hotel-search-machu-picchu.3L3N316" target="_blank">Book Aguas Calientes Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Bus up/down: $24</span>
+            <span class="cost-tag">Guide: $20–30</span>
+            <span class="cost-tag">Huayna Picchu: $25</span>
+            <span class="cost-tag">Food: $25–45</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 7</span>
+      <span class="day-title">Final Machu Picchu Morning + Train Back to Cusco</span>
+      <span class="day-location">Aguas Calientes → Cusco</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Optional third visit to Machu Picchu — early morning for final photos and quiet exploration <small>(~2–3 hr)</small></li>
+          <li>OR relaxed breakfast in Aguas Calientes and a walk along the river <small>(~1.5 hr)</small></li>
+          <li>Aguas Calientes Orchid Garden — over 200 species of native orchids <small>(~45 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Afternoon train back to Ollantaytambo <small>(~1.5 hr)</small></li>
+          <li>Transfer back to Cusco <small>(~1.5 hr)</small></li>
+          <li>Check into Cusco hotel for one final night <small>(~20 min)</small></li>
+          <li>Farewell dinner in Cusco <small>(~2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Cusco
+            <a href="https://expedia.com/affiliates/hotel-search-cusco.wc3GBJK" target="_blank">Book Cusco Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Train: $50–100</span>
+            <span class="cost-tag">Transfer: $15–25</span>
+            <span class="cost-tag">Food: $25–50</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-divider">
+    <div class="city-divider-line"></div>
+    <div class="city-divider-label">Lima — Days 8–10</div>
+    <div class="city-divider-line"></div>
+  </div>
+
+  <!-- DAY 8 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 8</span>
+      <span class="day-title">Fly to Lima + Miraflores + Pacific Cliffs</span>
+      <span class="day-location">Cusco → Lima</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out and fly Cusco → Lima <small>(~1.5 hr flight)</small></li>
+          <li>Check into hotel in Miraflores — Lima's best neighborhood for visitors <small>(~30 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Walk the Malecón — Lima's stunning clifftop promenade above the Pacific Ocean <small>(~1.5 hr)</small></li>
+          <li>Parque del Amor — lovers' park on the cliff edge with great ocean views <small>(~30 min)</small></li>
+          <li>Paragliding off the Miraflores cliffs — one of the most accessible places in the world to try it <small>(~30 min flight, ~$60–80)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li><strong>Dinner in Miraflores</strong> — Lima is one of the best food cities in the world <small>(~2 hr)</small></li>
+          <li>Must try: fresh ceviche, tiradito, causa, and anticuchos (grilled beef heart skewers)</li>
+          <li>Top restaurants: Central, Maido, or La Mar for world-class Peruvian cuisine</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Lima Food Scene:</strong> Lima consistently ranks among the world's top food cities. Don't skip the ceviche — Peruvian ceviche is cured in fresh lime juice with aji amarillo chili. La Mar is a great accessible option that doesn't require months of advance booking.</p>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Lima
+            <a href="https://expedia.com/affiliates/hotel-search-lima.uaO8gfE" target="_blank">Book Lima Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Flight: $60–120</span>
+            <span class="cost-tag">Paragliding: $60–80</span>
+            <span class="cost-tag">Food: $30–80</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 9 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 9</span>
+      <span class="day-title">Historic Lima + Barranco + Seafood</span>
+      <span class="day-location">Lima</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li><strong>Historic Centre (Centro Histórico)</strong> — UNESCO World Heritage Site <small>(~2.5 hr)</small></li>
+          <li>Plaza Mayor — Lima's grand main square with the Government Palace and Cathedral</li>
+          <li>Convento de San Francisco — stunning colonial monastery with famous catacombs <small>(~1 hr)</small></li>
+          <li>Palacio de Torre Tagle — finest example of Spanish baroque architecture in Lima <small>(~20 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Lunch at Mercado Surquillo — Lima's best local food market <small>(~1 hr)</small></li>
+          <li>Try fresh ceviche, empanadas, and tropical fruits at the market stalls</li>
+          <li><strong>Barranco neighborhood</strong> — Lima's bohemian seaside district, full of color and street art <small>(~2 hr)</small></li>
+          <li>Bridge of Sighs (Puente de los Suspiros) — picturesque colonial bridge with ocean views <small>(~20 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Sunset drinks at a clifftop bar in Barranco <small>(~1 hr)</small></li>
+          <li>Dinner in Barranco — great restaurant scene, more relaxed than Miraflores <small>(~1.5 hr)</small></li>
+          <li>Live music and pisco bars — Barranco is Lima's nightlife hub <small>(~1–2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Larco Museum — world-class pre-Columbian artifacts in a stunning colonial mansion <small>(~1.5 hr)</small></li>
+          <li>Huaca Pucllana — Wari culture pyramid ruins right in the middle of Miraflores <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel — Lima
+            <a href="https://expedia.com/affiliates/hotel-search-lima.uaO8gfE" target="_blank">Book Lima Hotels →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Catacombs: $8</span>
+            <span class="cost-tag">Food: $25–60</span>
+            <span class="cost-tag">Drinks: $15–30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 10 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 10</span>
+      <span class="day-title">Final Morning + Departure</span>
+      <span class="day-location">Lima</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Final breakfast — try pan con chicharrón (crispy pork sandwich) at a local bakery <small>(~45 min)</small></li>
+          <li>Last walk along the Malecón cliffs — the Pacific at sunrise is stunning <small>(~1 hr)</small></li>
+          <li>Last minute shopping — Indian Market in Miraflores for textiles and crafts <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Departure</div>
+        <ul class="activity-list">
+          <li>Transfer to Jorge Chávez International Airport (LIM) <small>(~30–45 min from Miraflores)</small></li>
+          <li>Allow 3 hr before international departure — Lima airport can be busy</li>
+        </ul>
+      </div>
+      <div class="warning-block">
+        <p><strong>⏰ Airport Tip:</strong> Lima's airport is about 45 min from Miraflores in normal traffic — but Lima traffic can be unpredictable. Give yourself plenty of time, especially for morning departures.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Larco Herrera Museum if you missed it earlier — absolutely world class <small>(~1.5 hr)</small></li>
+          <li>Miraflores waterfront for a final pisco sour at a clifftop bar</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Departure day</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Transport to airport: $15–25</span>
+            <span class="cost-tag">Food: $15–30</span>
+            <span class="cost-tag">Shopping: varies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="booking-section">
+    <h2>Activities &amp; Bookings to Arrange in Advance</h2>
+    <div class="booking-priority">
+      <div class="priority-label high">High Priority</div>
+      <ul class="booking-list">
+        <li>Machu Picchu entry tickets — book months ahead</li>
+        <li>PeruRail / Inca Rail train tickets</li>
+        <li>All accommodation</li>
+        <li>Huayna Picchu tickets (very limited)</li>
+        <li>Flights CUZ → LIM</li>
+      </ul>
+    </div>
+    <div class="booking-priority">
+      <div class="priority-label medium">Medium Priority</div>
+      <ul class="booking-list">
+        <li>Rainbow Mountain tour</li>
+        <li>Sacred Valley private driver</li>
+        <li>Machu Picchu licensed guide</li>
+        <li>Altitude medication (consult doctor)</li>
+        <li>Lima restaurant reservations</li>
+      </ul>
+    </div>
+    <div class="booking-priority">
+      <div class="priority-label low">Plan Ahead</div>
+      <ul class="booking-list">
+        <li>Travel insurance</li>
+        <li>Boleto Turístico — Cusco ruins</li>
+        <li>Paragliding — Miraflores</li>
+        <li>Larco Museum tickets</li>
+        <li>Aguas Calientes hot springs</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <a class="back-link" href="https://triptipsandtools.netlify.app/itineraries">← Back to Itineraries</a>
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top ↑</button>
+</div>
+<div class="affiliate-note">Some links on this page are affiliate links. If you book through them, we may earn a small commission at no extra cost to you.</div>
+
+</body>
+</html>
