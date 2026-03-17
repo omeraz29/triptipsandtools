@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thailand Itinerary • Trip Tips and Tools</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #071a1a;
+      --surface: #0d2424;
+      --surface2: #122e2e;
+      --border: #1e4a4a;
+      --accent: #2dd4bf;
+      --accent2: #5eead4;
+      --accent3: #99f6e4;
+      --text: #ecfdf5;
+      --text-muted: #6ee7d4;
+      --text-dim: #2d7a70;
+      --gold: #fcd34d;
+      --danger: #fca5a5;
+      --header-bg: #051212;
+    }
+
+    body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
+
+    nav { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { font-family: 'Georgia', serif; font-size: 1rem; font-weight: bold; color: var(--accent2); text-decoration: none; letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-family: sans-serif; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent2); }
+
+    .hero { background: linear-gradient(135deg, #041515 0%, #082222 40%, #071a1a 70%, #030e1a 100%); border-bottom: 1px solid var(--border); padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 40% 50%, rgba(45,212,191,0.10) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(94,234,212,0.06) 0%, transparent 50%); pointer-events: none; }
+    .hero-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text); font-weight: normal; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .hero h1 span { color: var(--accent2); }
+    .hero-subtitle { color: var(--text-muted); font-family: sans-serif; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero-route { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem 1.2rem; font-family: sans-serif; font-size: 0.85rem; color: var(--accent3); flex-wrap: wrap; justify-content: center; }
+    .hero-route span { color: var(--text-dim); }
+
+    .toolbar { max-width: 900px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .back-link { color: var(--accent2); text-decoration: none; font-family: sans-serif; font-size: 0.875rem; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .print-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: sans-serif; font-size: 0.8rem; padding: 0.4rem 1rem; border-radius: 0.25rem; cursor: pointer; transition: all 0.2s; }
+    .print-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    .city-divider { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.5rem; }
+    .city-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .city-divider-label { font-family: sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); white-space: nowrap; padding: 0.3rem 0.8rem; border: 1px solid var(--border); border-radius: 2rem; background: var(--surface2); }
+
+    .day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; margin-bottom: 1.5rem; overflow: hidden; }
+    .day-header { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+    .day-badge { background: var(--accent); color: #041515; font-family: sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 0.2rem; white-space: nowrap; }
+    .day-title { font-size: 1.05rem; font-weight: normal; color: var(--text); }
+    .day-location { font-family: sans-serif; font-size: 0.78rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .day-body { padding: 1.25rem 1.5rem; }
+    .section-block { margin-bottom: 1.25rem; }
+    .section-block:last-child { margin-bottom: 0; }
+    .section-label { font-family: sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+    .section-label::before { content: ''; display: inline-block; width: 12px; height: 1px; background: var(--text-dim); }
+
+    .activity-list { list-style: none; padding: 0; }
+    .activity-list li { padding: 0.3rem 0 0.3rem 1.2rem; position: relative; font-size: 0.95rem; color: var(--text); border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .activity-list li:last-child { border-bottom: none; }
+    .activity-list li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+    .activity-list li small { color: var(--text-muted); font-family: sans-serif; font-size: 0.8rem; }
+
+    .note-block { background: rgba(45,212,191,0.06); border-left: 3px solid var(--accent); border-radius: 0 0.4rem 0.4rem 0; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+    .note-block p { font-family: sans-serif; font-size: 0.875rem; color: var(--text-muted); }
+    .note-block strong { color: var(--accent3); }
+    .warning-block { background: rgba(252,211,77,0.06); border-left: 3px solid var(--gold); border-radius: 0 0.4rem 0.4rem 0; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+    .warning-block p { font-family: sans-serif; font-size: 0.875rem; color: #c8a84a; }
+
+    .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    @media (max-width: 540px) { .bottom-row { grid-template-columns: 1fr; } }
+
+    .info-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem 1rem; }
+    .info-chip-label { font-family: sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem; }
+    .info-chip-value { font-family: sans-serif; font-size: 0.875rem; color: var(--text); }
+    .info-chip-value a { color: var(--accent2); font-size: 0.8rem; display: block; text-decoration: none; margin-top: 0.2rem; }
+    .info-chip-value a:hover { color: var(--accent); }
+
+    .cost-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem 1rem; }
+    .cost-chip-label { font-family: sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem; }
+    .cost-items { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .cost-tag { background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.2); border-radius: 0.2rem; padding: 0.15rem 0.5rem; font-family: sans-serif; font-size: 0.78rem; color: var(--accent3); white-space: nowrap; }
+
+    .booking-section { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin-top: 2rem; }
+    .booking-section h2 { font-size: 1.1rem; font-weight: normal; color: var(--text); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .booking-priority { margin-bottom: 1.25rem; }
+    .priority-label { font-family: sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .priority-label.high { color: var(--danger); }
+    .priority-label.medium { color: var(--gold); }
+    .priority-label.low { color: var(--text-muted); }
+    .booking-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.4rem; }
+    .booking-list li { font-family: sans-serif; font-size: 0.875rem; color: var(--text); padding: 0.3rem 0.6rem; background: var(--surface2); border-radius: 0.3rem; border: 1px solid var(--border); }
+
+    .page-footer { max-width: 900px; margin: 0 auto; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 0.75rem; }
+    .back-to-top { font-family: sans-serif; font-size: 0.8rem; color: var(--text-dim); cursor: pointer; background: none; border: none; transition: color 0.2s; }
+    .back-to-top:hover { color: var(--accent2); }
+    .affiliate-note { font-family: sans-serif; font-size: 0.78rem; color: var(--text-dim); text-align: center; padding: 0.5rem 1.5rem 2rem; max-width: 900px; margin: 0 auto; }
+
+    @media print { nav, .toolbar .print-btn { display: none; } .day-card { break-inside: avoid; } body { background: white; color: black; } }
+    @media (max-width: 600px) { .hero { padding: 2rem 1rem 1.5rem; } main { padding: 0 1rem 3rem; } .day-body { padding: 1rem; } nav { padding: 0 1rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="https://triptipsandtools.netlify.app/">Trip Tips and Tools</a>
+  <div class="nav-links">
+    <a href="https://triptipsandtools.netlify.app/itineraries">Itineraries</a>
+    <a href="https://triptipsandtools.netlify.app/expense-tool.html">Expense Tool</a>
+    <a href="https://triptipsandtools.netlify.app/">Home</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-flag">🇹🇭</div>
+  <h1>Thailand Itinerary <span>(10 Days)</span></h1>
+  <p class="hero-subtitle">Temples, Jungles &amp; Turquoise Waters</p>
+  <div class="hero-route">
+    Bangkok <span>→</span> Chiang Mai <span>→</span> Phi Phi Islands
+  </div>
+</div>
+
+<div class="toolbar">
+  <a class="back-link" href="https://triptipsandtools.netlify.app/itineraries">← Back to Itineraries</a>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<main>
+
+  <div class="city-divider">
+    <div class="city-divider-line"></div>
+    <div class="city-divider-label">🏙 Bangkok — Days 1–4</div>
+    <div class="city-divider-line"></div>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 1</span>
+      <span class="day-title">Arrival + Temples + Rooftop Bars</span>
+      <span class="day-location">Bangkok</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Arrival</div>
+        <ul class="activity-list">
+          <li>Land at Suvarnabhumi Airport (BKK) <small>(allow 1–2 hr for immigration)</small></li>
+          <li>Take the Airport Rail Link to city center <small>(~30 min, ฿45)</small></li>
+          <li>Check into hotel and freshen up <small>(~30 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li><strong>Wat Pho</strong> — Temp
