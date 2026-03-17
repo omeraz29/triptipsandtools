@@ -60,7 +60,7 @@ export default async (req) => {
         <div class="card-content">
           <div class="title">Japan (11 Days): Tokyo → Kyoto → Osaka</div>
           <p class="desc">Shibuya base, go-karts, baseball + karaoke, Mt. Fuji stop, Kyoto classics, Osaka nightlife.</p>
-          <a class="btn ghost" href="/itineraries/japan">View itinerary</a>
+          <a class="btn ghost" href="/japan-itinerary.html">View itinerary</a>
         </div>
       </div>
       ${cards}
