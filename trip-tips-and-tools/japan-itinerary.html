@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Japan Itinerary • Trip Tips and Tools</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Background image layer ── */
+    #bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-color: #0a0a0f;
+    }
+
+    #bg-layer .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #bg-layer .bg-slide.active {
+      opacity: 1;
+    }
+
+    /* Dark overlay so text stays readable */
+    #bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0.45) 60%,
+        rgba(0,0,0,0.65) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* ── Page-specific styles ── */
+    .divider { height:1px; background: rgba(255,255,255,.10); margin: 18px 0; }
+
+    .it-meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .chip {
+      display:inline-flex; align-items:center;
+      padding: 6px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 13px;
+      opacity:.95;
+    }
+
+    .day { padding: 16px 0; border-top: 1px solid rgba(255,255,255,.08); }
+    .day:first-child { border-top: 0; }
+    .day h3 { margin: 0 0 10px 0; }
+
+    .cols { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 10px; }
+    .card {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(0,0,0,.30);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .card h4 { margin: 0 0 8px 0; }
+    .card ul { margin: 0; padding-left: 18px; }
+    .card li { margin: 6px 0; }
+
+    .kv {
+      display:grid;
+      grid-template-columns: 180px 1fr;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .kv .k { opacity:.8; }
+    .kv .v { opacity:.98; }
+
+    .linkrow { display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px; }
+    .list2 { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
+
+    /* Subtle image credit badge in corner */
+    #bg-label {
+      position: fixed;
+      bottom: 14px;
+      right: 16px;
+      z-index: 10;
+      font-size: 11px;
+      opacity: 0.4;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .cols { grid-template-columns: 1fr; }
+      .kv { grid-template-columns: 1fr; }
+      .list2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed background image layer -->
+  <div id="bg-layer">
+    <div class="bg-slide active" style="background-image: url('images/Japan/Day2.webp')"></div>
+    <div class="bg-slide"        style="background-image: url('images/Japan/Day1.webp')"></div>
+    <div class="bg-slide"        style="background-image: url('images/Japan/Day4.webp')"></div>
+    <div class="bg-slide"        style="background-image: url('images/Japan/Day6.webp')"></div>
+    <div class="bg-slide"        style="background-image: url('images/Japan/Day8.webp')"></div>
+    <div class="bg-slide"        style="background-image: url('images/Japan/Day10.webp')"></div>
+    <div class="bg-slide"        style="background-image: url('images/Japan/Day12.webp')"></div>
+  </div>
+  <div id="bg-overlay"></div>
+  <div id="bg-label">Day 1 · Tokyo</div>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <div class="logo"></div>
+        <div>Trip Tips and Tools</div>
+      </a>
+      <div class="navlinks">
+        <a class="pill" href="itineraries.html">Itineraries</a>
+        <a class="pill" href="expense-tool.html">Expense Tool</a>
+        <a class="pill" href="index.html">Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section">
+    <div class="h2">Japan Itinerary (11 Days)</div>
+    <p class="muted" style="margin-top:0">
+      Tokyo → Kyoto → Osaka
+    </p>
+
+    <div style="height:12px"></div>
+    <div class="linkrow">
+      <a class="btn ghost" href="itineraries.html">← Back to Itineraries</a>
+      <button class="btn ghost" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DAY 1 -->
+    <div class="day" data-bg="0">
+      <h3>Day 1 — Arrival Tokyo (Relaxed Shibuya Evening)</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning / Afternoon</h4>
+          <ul>
+            <li>Arrive Tokyo (Narita or Haneda)</li>
+            <li>Train to Airbnb near Shibuya (~60–90 min)</li>
+            <li>Check-in and rest (~1 hr)</li>
+            <li>Short neighborhood walk (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul>
+            <li>Casual dinner: Uobei Sushi Shibuya (~1 hr)</li>
+            <li>Gentle Shibuya walk — Shibuya Crossing, Don Quijote (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Alternative</h4>
+          <ul>
+            <li>Shibuya Sky sunset (~1 hr)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Airbnb — Shibuya area
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.airbnb.com/s/Shibuya--Tokyo--Japan/homes" target="_blank" rel="noopener noreferrer">Browse Shibuya Airbnbs</a>
+        </div>
+        <div class="k">Estimated Expenses</div>
+        <div class="v">Food: $40–60 • Transit: $15–25</div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day" data-bg="1">
+      <h3>Day 2 — Go-Karts + Asakusa + Ueno Sakura</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul><li>Tokyo street kart experience (~2 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Requirements</h4>
+          <ul>
+            <li>Valid driver's license</li>
+            <li>International Driver's Permit (IDP) required for most travelers</li>
+            <li>Passport required</li>
+            <li>Closed shoes recommended</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Asakusa and Senso-ji Temple (~2 hr)</li>
+            <li>Lunch: Tempura Daikokuya (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul>
+            <li>Ueno Park cherry blossoms (~1–2 hr)</li>
+            <li>Izakaya dinner (~1–1.5 hr)</li>
+          </ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>teamLab Planets (~2 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div><div class="v">Airbnb — Shibuya area</div>
+        <div class="k">Estimated Expenses</div><div class="v">Karting: $60–100 • Food: $50–70 • Transit: $15–25</div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day" data-bg="1">
+      <h3>Day 3 — Shibuya, Baseball, Karaoke Night</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul>
+            <li>Shibuya and Harajuku walk (~2–3 hr)</li>
+            <li>Meiji Shrine (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Lunch: Tonkatsu Maisen (~1 hr)</li>
+            <li>Professional baseball game (~3 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul><li>Karaoke after the game (~1.5–2 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Recommended Karaoke</h4>
+          <ul>
+            <li>Karaoke Kan Shibuya</li>
+            <li>Big Echo</li>
+            <li>Karaoke no Tetsujin</li>
+          </ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Golden Gai drinks (~1–2 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div><div class="v">Airbnb — Shibuya area</div>
+        <div class="k">Estimated Expenses</div><div class="v">Baseball: $40–80 • Karaoke: $20–40 • Food: $50–70 • Transit: $15–25</div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day" data-bg="2">
+      <h3>Day 4 — Tokyo Neighborhoods Day</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul><li>Shinjuku Gyoen (~2 hr)</li></ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Akihabara exploration (~2–3 hr)</li>
+            <li>Lunch: Gyukatsu Motomura (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul><li>Dinner in Omoide Yokocho (~1–1.5 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Tsukiji Outer Market (~2 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div><div class="v">Airbnb — Shibuya area</div>
+        <div class="k">Estimated Expenses</div><div class="v">Food: $50–70 • Transit: $15–25 • Entry fees: ~$10</div>
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="day" data-bg="2">
+      <h3>Day 5 — Tokyo Disneyland Day</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul><li>Full day at Tokyo Disneyland (~6–8 hr)</li></ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul><li>Lunch inside the park (~1 hr)</li></ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul><li>Dinner in Ikspiari shopping area (~1–1.5 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>DisneySea instead (more unique experience)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div><div class="v">Airbnb — Shibuya area</div>
+        <div class="k">Estimated Expenses</div><div class="v">Park ticket: $70–100 • Food: $60–80 • Transit: $15–25</div>
+      </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div class="day" data-bg="3">
+      <h3>Day 6 — Mt. Fuji Stop (Kawaguchiko) → Kyoto Transfer</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul>
+            <li>Check out Airbnb (~30 min)</li>
+            <li>Send luggage ahead via Yamato (~20 min) OR use Mt. Fuji area lockers</li>
+            <li>Travel to Kawaguchiko (~2 hr)</li>
+          </ul>
+          <div class="divider"></div>
+          <h4>Bag Storage Options</h4>
+          <ul>
+            <li>Kawaguchiko Station coin lockers</li>
+            <li>Mt. Fuji area luggage lockers</li>
+            <li>Tourist information luggage storage</li>
+            <li>Luggage forwarding to Kyoto hotel (recommended)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon — Mt. Fuji Area</h4>
+          <ul>
+            <li>Lake Kawaguchi (~1 hr)</li>
+            <li>Oishi Park (~45 min)</li>
+            <li>Mt Fuji Ropeway (~45–60 min)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul>
+            <li>Travel to Kyoto (~3 hr)</li>
+            <li>Dinner in Gion (~1–1.5 hr)</li>
+          </ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Hakone (~similar timing)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Kyoto Hotel
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.expedia.com/Kyoto-Hotels.d6131486.Travel-Guide-Hotels" target="_blank" rel="noopener noreferrer">Browse Kyoto Hotels</a>
+        </div>
+        <div class="k">Estimated Expenses</div><div class="v">Transit (Fuji + Kyoto): $90–140 • Food: $50–70 • Activities: $10–20</div>
+      </div>
+    </div>
+
+    <!-- DAY 7 -->
+    <div class="day" data-bg="3">
+      <h3>Day 7 — Kyoto Temples & Cultural Highlights</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul><li>Fushimi Inari Taisha (major shrine complex) (~2–3 hr)</li></ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Kiyomizu-dera Temple (~1.5 hr)</li>
+            <li>Higashiyama historic streets (~1.5 hr)</li>
+            <li>Lunch nearby (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul><li>Pontocho Alley dinner (~1.5 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Philosopher's Path temples (~2 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Kyoto Hotel
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.expedia.com/Kyoto-Hotels.d6131486.Travel-Guide-Hotels" target="_blank" rel="noopener noreferrer">Browse Kyoto Hotels</a>
+        </div>
+        <div class="k">Estimated Expenses</div><div class="v">Food: $50–70 • Transit: $10–20 • Entry: ~$10</div>
+      </div>
+    </div>
+
+    <!-- DAY 8 -->
+    <div class="day" data-bg="4">
+      <h3>Day 8 — Arashiyama Nature + Temples</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul>
+            <li>Bamboo Grove (~45 min)</li>
+            <li>Tenryu-ji Temple (~1 hr)</li>
+            <li>Monkey Park (~1.5–2 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Lunch: Yudofu Sagano (~1 hr)</li>
+            <li>Optional Sagano Scenic Railway (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul><li>Relaxed Kyoto dinner (~1–1.5 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Nara temples (~5 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Kyoto Hotel
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.expedia.com/Kyoto-Hotels.d6131486.Travel-Guide-Hotels" target="_blank" rel="noopener noreferrer">Browse Kyoto Hotels</a>
+        </div>
+        <div class="k">Estimated Expenses</div><div class="v">Food: $50–70 • Transit: $10–20 • Activities: $10–30</div>
+      </div>
+    </div>
+
+    <!-- DAY 9 -->
+    <div class="day" data-bg="4">
+      <h3>Day 9 — Kyoto → Osaka + Nightlife</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul>
+            <li>Train to Osaka (~30 min)</li>
+            <li>Hotel check-in (~30 min)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Osaka Castle (~2 hr)</li>
+            <li>Lunch: Okonomiyaki Mizuno (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul>
+            <li>Dotonbori (~1–2 hr)</li>
+            <li>Nightlife Shinsaibashi / Amerikamura (~2–3 hr)</li>
+          </ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>River cruise (~1 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Osaka Hotel
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.expedia.com/Osaka-Hotels.d179897.Travel-Guide-Hotels" target="_blank" rel="noopener noreferrer">Browse Osaka Hotels</a>
+        </div>
+        <div class="k">Estimated Expenses</div><div class="v">Food: $60–80 • Transit: $10–20 • Nightlife: $30–60</div>
+      </div>
+    </div>
+
+    <!-- DAY 10 -->
+    <div class="day" data-bg="5">
+      <h3>Day 10 — Osaka Highlights Day</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul>
+            <li>Osaka Aquarium Kaiyukan (~2 hr)</li>
+            <li>Tempozan Harbor Village walk (~1 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Kuromon Market food exploration (~1–2 hr)</li>
+            <li>Shinsaibashi shopping (~1–2 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul>
+            <li>Umeda Sky Building observation (~1 hr)</li>
+            <li>Dinner near Umeda (~1–1.5 hr)</li>
+          </ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Universal Studios Japan</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Osaka Hotel
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.expedia.com/Osaka-Hotels.d179897.Travel-Guide-Hotels" target="_blank" rel="noopener noreferrer">Browse Osaka Hotels</a>
+        </div>
+        <div class="k">Estimated Expenses</div><div class="v">Aquarium: ~$25 • Food: $60–80 • Transit: $10–20 • Observation deck: ~$15</div>
+      </div>
+    </div>
+
+    <!-- DAY 11 -->
+    <div class="day" data-bg="5">
+      <h3>Day 11 — Osaka Final Day</h3>
+      <div class="cols">
+        <div class="card">
+          <h4>Morning</h4>
+          <ul><li>Slow morning or revisit favorite area (~1–2 hr)</li></ul>
+        </div>
+        <div class="card">
+          <h4>Afternoon</h4>
+          <ul>
+            <li>Lunch: Ichiran (~1 hr)</li>
+            <li>Namba Parks shopping (~1–2 hr)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Evening</h4>
+          <ul><li>Final dinner and drinks (~1.5–2 hr)</li></ul>
+          <div class="divider"></div>
+          <h4>Alternative</h4>
+          <ul><li>Kobe (~5 hr)</li></ul>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Accommodation</div>
+        <div class="v">
+          Osaka Hotel
+          <div style="height:10px"></div>
+          <a class="btn ghost" href="https://www.expedia.com/Osaka-Hotels.d179897.Travel-Guide-Hotels" target="_blank" rel="noopener noreferrer">Browse Osaka Hotels</a>
+        </div>
+        <div class="k">Estimated Expenses</div><div class="v">Food: $60–80 • Transit: $10–20</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ACTIVITIES SECTION -->
+    <div data-bg="6">
+      <div class="h2" style="font-size:20px">Activities That Should Be Booked in Advance</div>
+
+      <div class="list2">
+        <div class="card">
+          <h4>High priority</h4>
+          <ul>
+            <li>Airbnb — Shibuya area</li>
+            <li>Kyoto Hotel</li>
+            <li>Osaka Hotel</li>
+            <li>Tokyo go-kart experience</li>
+            <li>Baseball tickets</li>
+            <li>Tokyo Disneyland / DisneySea</li>
+            <li>Universal Studios Japan (if chosen)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Medium priority</h4>
+          <ul>
+            <li>Karaoke reservation</li>
+            <li>teamLab (if chosen)</li>
+            <li>Sagano Scenic Railway</li>
+            <li>Nice dinners</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="height:14px"></div>
+      <div class="card">
+        <h4>Plan ahead</h4>
+        <ul>
+          <li>Mt Fuji luggage forwarding</li>
+          <li>Fuji locker strategy (day of logistics)</li>
+          <li>Shibuya Sky (optional)</li>
+          <li>Onsen reservations</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+    <div class="linkrow">
+      <a class="btn ghost" href="itineraries.html">← Back to Itineraries</a>
+      <button class="btn ghost" onclick="window.scrollTo({top:0, behavior:'smooth'})">Back to top</button>
+    </div>
+  </div>
+
+  <div class="container footer">
+    <div class="muted">Tip: You can later turn each destination into its own page for SEO + affiliate links.</div>
+  </div>
+
+  <script>
+    (() => {
+      const slides  = document.querySelectorAll('#bg-layer .bg-slide');
+      const label   = document.getElementById('bg-label');
+      const total   = slides.length; // 7
+      let current   = 0;
+
+      const labels = [
+        'Day 1 · Tokyo Arrival',
+        'Days 2–3 · Tokyo Exploration',
+        'Days 4–5 · Tokyo Neighborhoods',
+        'Days 6–7 · Mt. Fuji & Kyoto',
+        'Days 8–9 · Arashiyama & Osaka',
+        'Days 10–11 · Osaka Highlights',
+        'Booking Reminders'
+      ];
+
+      function switchTo(index) {
+        if (index === current) return;
+        slides[current].classList.remove('active');
+        slides[index].classList.add('active');
+        label.textContent = labels[index];
+        current = index;
+      }
+
+      function onScroll() {
+        const scrollTop    = window.scrollY;
+        const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
+        const progress     = docHeight > 0 ? scrollTop / docHeight : 0; // 0 → 1
+        const index        = Math.min(total - 1, Math.floor(progress * total));
+        switchTo(index);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // set correct image on page load
+    })();
+  </script>
+
+</body>
+</html>

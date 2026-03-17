@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Costa Rica Itinerary • Trip Tips and Tools</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1a14;
+      --surface: #162010;
+      --surface2: #1c2b18;
+      --border: #2a3d22;
+      --accent: #4caf50;
+      --accent2: #81c784;
+      --accent3: #a5d6a7;
+      --text: #e8f5e9;
+      --text-muted: #8faa8e;
+      --text-dim: #5a7558;
+      --gold: #ffd54f;
+      --danger: #ef9a9a;
+      --header-bg: #0d1610;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--accent2);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-family: sans-serif;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0d1f10 0%, #162b1a 50%, #0f2418 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(76,175,80,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--text);
+      font-weight: normal;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .hero h1 span { color: var(--accent2); }
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-family: sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-route {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 0.5rem 1.2rem;
+      font-family: sans-serif;
+      font-size: 0.85rem;
+      color: var(--accent3);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-route span { color: var(--text-dim); }
+
+    /* TOOLBAR */
+    .toolbar {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .back-link {
+      color: var(--accent2);
+      text-decoration: none;
+      font-family: sans-serif;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .print-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      padding: 0.4rem 1rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .print-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* MAIN LAYOUT */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    /* DAY CARDS */
+    .day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .day-header {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .day-badge {
+      background: var(--accent);
+      color: #0a1a0c;
+      font-family: sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.2rem;
+      white-space: nowrap;
+    }
+    .day-title {
+      font-size: 1.05rem;
+      font-weight: normal;
+      color: var(--text);
+    }
+    .day-location {
+      font-family: sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .day-body { padding: 1.25rem 1.5rem; }
+
+    /* SECTION BLOCKS */
+    .section-block { margin-bottom: 1.25rem; }
+    .section-block:last-child { margin-bottom: 0; }
+
+    .section-label {
+      font-family: sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 1px;
+      background: var(--text-dim);
+    }
+
+    .activity-list {
+      list-style: none;
+      padding: 0;
+    }
+    .activity-list li {
+      padding: 0.3rem 0 0.3rem 1.2rem;
+      position: relative;
+      font-size: 0.95rem;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .activity-list li:last-child { border-bottom: none; }
+    .activity-list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .activity-list li small {
+      color: var(--text-muted);
+      font-family: sans-serif;
+      font-size: 0.8rem;
+    }
+
+    /* NOTE BLOCKS */
+    .note-block {
+      background: rgba(76,175,80,0.06);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 0.4rem 0.4rem 0;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .note-block p {
+      font-family: sans-serif;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .note-block strong { color: var(--accent3); }
+
+    .warning-block {
+      background: rgba(255,213,79,0.06);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 0.4rem 0.4rem 0;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .warning-block p {
+      font-family: sans-serif;
+      font-size: 0.875rem;
+      color: #c8b87a;
+    }
+
+    /* BOTTOM ROW */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 540px) {
+      .bottom-row { grid-template-columns: 1fr; }
+    }
+
+    .info-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+    }
+    .info-chip-label {
+      font-family: sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .info-chip-value {
+      font-family: sans-serif;
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+    .info-chip-value a {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      display: block;
+      text-decoration: none;
+      margin-top: 0.2rem;
+    }
+    .info-chip-value a:hover { color: var(--accent); }
+
+    .cost-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+    }
+    .cost-chip-label {
+      font-family: sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .cost-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .cost-tag {
+      background: rgba(76,175,80,0.1);
+      border: 1px solid rgba(76,175,80,0.2);
+      border-radius: 0.2rem;
+      padding: 0.15rem 0.5rem;
+      font-family: sans-serif;
+      font-size: 0.78rem;
+      color: var(--accent3);
+      white-space: nowrap;
+    }
+
+    /* ADVANCE BOOKING SECTION */
+    .booking-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    .booking-section h2 {
+      font-size: 1.1rem;
+      font-weight: normal;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .booking-priority {
+      margin-bottom: 1.25rem;
+    }
+    .priority-label {
+      font-family: sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .priority-label.high { color: var(--danger); }
+    .priority-label.medium { color: var(--gold); }
+    .priority-label.low { color: var(--text-muted); }
+    .booking-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.4rem;
+    }
+    .booking-list li {
+      font-family: sans-serif;
+      font-size: 0.875rem;
+      color: var(--text);
+      padding: 0.3rem 0.6rem;
+      background: var(--surface2);
+      border-radius: 0.3rem;
+      border: 1px solid var(--border);
+    }
+
+    /* FOOTER */
+    .page-footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .back-to-top {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: color 0.2s;
+    }
+    .back-to-top:hover { color: var(--accent2); }
+
+    @media print {
+      nav, .toolbar .print-btn { display: none; }
+      .day-card { break-inside: avoid; }
+      body { background: white; color: black; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 2rem 1rem 1.5rem; }
+      main { padding: 0 1rem 3rem; }
+      .day-body { padding: 1rem; }
+      nav { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="https://triptipsandtools.netlify.app/">Trip Tips and Tools</a>
+  <div class="nav-links">
+    <a href="https://triptipsandtools.netlify.app/itineraries">Itineraries</a>
+    <a href="https://triptipsandtools.netlify.app/expense-tool">Expense Tool</a>
+    <a href="https://triptipsandtools.netlify.app/">Home</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-flag">🌿</div>
+  <h1>Costa Rica Itinerary <span>(12 Days)</span></h1>
+  <p class="hero-subtitle">Pura Vida — Rainforests, Volcanoes &amp; Pacific Coast</p>
+  <div class="hero-route">
+    San José <span>→</span> Manuel Antonio <span>→</span> Monteverde <span>→</span> La Fortuna / Arenal <span>→</span> Tamarindo
+  </div>
+</div>
+
+<div class="toolbar">
+  <a class="back-link" href="https://triptipsandtools.netlify.app/itineraries">← Back to Itineraries</a>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<main>
+
+  <!-- DAY 1 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 1</span>
+      <span class="day-title">Arrival San José — Pick Up Car &amp; Settle In</span>
+      <span class="day-location">San José</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Arrival</div>
+        <ul class="activity-list">
+          <li>Land at Juan Santamaría International Airport (SJO) <small>(allow 1–2 hr for immigration)</small></li>
+          <li>Pick up rental car at airport — <strong>4WD recommended</strong> <small>(~45 min)</small></li>
+          <li>Stock up at a local grocery or Super Mas <small>(~30 min)</small></li>
+          <li>Check into San José hotel / Airbnb <small>(~20 min drive)</small></li>
+        </ul>
+      </div>
+      <div class="warning-block">
+        <p><strong>⚠ Rental Car Tip:</strong> Book in advance and choose a reputable company (Adobe, Alamo, Budget). Full insurance coverage strongly recommended. A 4WD/AWD vehicle is essential for dirt roads in Monteverde and Arenal.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Dinner in the Barrio Escalante food district <small>(~1.5 hr)</small></li>
+          <li>Rest — long drive to Manuel Antonio begins tomorrow</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel or Airbnb — San José
+            <a href="https://www.airbnb.com/s/San-Jose--Costa-Rica/homes" target="_blank">Browse San José Airbnbs →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Car rental: $40–80/day</span>
+            <span class="cost-tag">Food: $30–50</span>
+            <span class="cost-tag">Groceries: $20–35</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 2</span>
+      <span class="day-title">Drive to Manuel Antonio + Beach Arrival</span>
+      <span class="day-location">San José → Manuel Antonio</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out and load car <small>(~30 min)</small></li>
+          <li>Drive San José → Manuel Antonio via Route 27 &amp; 34 <small>(~3 hr, 180 km)</small></li>
+          <li>Stop at Jacó beachfront for a quick lunch break <small>(~45 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Check in to hotel / Airbnb in Manuel Antonio <small>(~20 min)</small></li>
+          <li>Walk to Playa Biesanz or Playa Espadilla <small>(~1–2 hr)</small></li>
+          <li>Sunset swim or beach hang</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Dinner at El Avión (converted plane fuselage restaurant) or La Luna <small>(~1.5 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Airbnb — Manuel Antonio
+            <a href="https://www.airbnb.com/s/Manuel-Antonio--Costa-Rica/homes" target="_blank">Browse Manuel Antonio Airbnbs →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Food: $50–70</span>
+            <span class="cost-tag">Gas: $15–25</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 3</span>
+      <span class="day-title">Manuel Antonio National Park + Beach Day</span>
+      <span class="day-location">Manuel Antonio</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Enter Manuel Antonio National Park early (opens 7 AM) <small>(~3–4 hr)</small></li>
+          <li>Hike trail to Playa Manuel Antonio (best beach in the park)</li>
+          <li>Spot wildlife: sloths, capuchin monkeys, iguanas, coatis</li>
+          <li>Guided nature tour recommended for wildlife spotting <small>(~2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Park Tip:</strong> Tickets must be reserved online in advance at sinac.go.cr. Park entry is limited and sells out — book at least 2–3 days ahead.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Beach time at Playa Espadilla or Biesanz <small>(~2 hr)</small></li>
+          <li>Lunch in town — Soda Sanchez or El Wagon <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Sunset cocktails at a hillside bar with ocean view <small>(~1 hr)</small></li>
+          <li>Dinner at Emilio's Café or Barba Roja <small>(~1.5 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Ocean kayaking or snorkeling tour <small>(~2–3 hr)</small></li>
+          <li>White-water rafting on Río Savegre <small>(~half day)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Airbnb — Manuel Antonio</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Park entry: $20–22</span>
+            <span class="cost-tag">Guide: $25–40</span>
+            <span class="cost-tag">Food: $50–70</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 4</span>
+      <span class="day-title">Drive to Monteverde — Cloud Forest Arrival</span>
+      <span class="day-location">Manuel Antonio → Monteverde</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out and pack car <small>(~30 min)</small></li>
+          <li>Drive Manuel Antonio → Monteverde via Route 27 &amp; 1 <small>(~4–5 hr, 250 km)</small></li>
+          <li>Final stretch on dirt mountain road — 4WD essential <small>(~45 min)</small></li>
+        </ul>
+      </div>
+      <div class="warning-block">
+        <p><strong>🛣 Road Warning:</strong> The last 35 km into Monteverde (via Sardinal) is unpaved and bumpy. Take it slow — road can be rough but is passable in 4WD. Allow extra time.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Check in to lodge / Airbnb in Santa Elena <small>(~20 min)</small></li>
+          <li>Walk around Santa Elena town, grab coffee <small>(~1 hr)</small></li>
+          <li>Visit Monteverde Cheese Factory (Cooperativa) <small>(~45 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Night walk in the cloud forest — guided tour <small>(~2 hr)</small></li>
+          <li>Dinner at Morpho's Restaurant or Chimera <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Lodge / Airbnb — Santa Elena / Monteverde
+            <a href="https://www.airbnb.com/s/Monteverde--Costa-Rica/homes" target="_blank">Browse Monteverde Airbnbs →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Night walk: $25–35</span>
+            <span class="cost-tag">Food: $45–65</span>
+            <span class="cost-tag">Gas: $20–30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 5</span>
+      <span class="day-title">Zipline Day + Cloud Forest Reserve</span>
+      <span class="day-location">Monteverde</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning — Zipline</div>
+        <ul class="activity-list">
+          <li><strong>Selvatura Park or 100% Aventura zipline tour</strong> — some of the longest zip lines in Costa Rica <small>(~3 hr)</small></li>
+          <li>Superman cable line, Tarzan swing, hanging bridges combo available</li>
+          <li>Canopy starts as early as 7:30 AM — book the first slot to beat crowds</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Top Zipline Operators:</strong> Selvatura Park, 100% Aventura, Extremo Park, and Sky Adventures all operate in the area. All are reputable — compare included features (bridges, swing, platform count).</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon — Cloud Forest</div>
+        <ul class="activity-list">
+          <li>Monteverde Cloud Forest Biological Reserve <small>(~2–3 hr)</small></li>
+          <li>Hike the Chomogo Trail or Sendero Bosque Nuboso for quetzal sightings</li>
+          <li>Lunch at a soda (local diner) in Santa Elena <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Sunset at Mirador San Gerardo viewpoint <small>(~45 min)</small></li>
+          <li>Dinner in Santa Elena — try casado (rice, beans, protein, salad) <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Curi-Cancha Reserve (smaller, better for birdwatching) <small>(~2 hr)</small></li>
+          <li>Hanging bridges at Selvatura (if not doing ziplines) <small>(~2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Lodge / Airbnb — Monteverde</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Ziplines: $60–90</span>
+            <span class="cost-tag">Reserve entry: $25</span>
+            <span class="cost-tag">Food: $45–65</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 6</span>
+      <span class="day-title">Drive to La Fortuna — Arenal Arrival</span>
+      <span class="day-location">Monteverde → La Fortuna / Arenal</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out and load car <small>(~30 min)</small></li>
+          <li>Option A: Drive via Tilarán — scenic but longer <small>(~3.5 hr)</small></li>
+          <li>Option B: Jeep-Boat-Jeep transfer across Lake Arenal <small>(~3 hr, ~$30/person)</small></li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Jeep-Boat-Jeep:</strong> The classic adventure transfer across Lago Arenal is popular and scenic — a shared jeep drops you at the lake, a boat crosses to the other side, and another jeep takes you to La Fortuna. Worth it.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Check in to hotel or lodge near Arenal Volcano <small>(~20 min)</small></li>
+          <li>First views of Arenal Volcano (on clear days) <small>(~30 min)</small></li>
+          <li>Walk around La Fortuna town, grab lunch <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Dinner at Don Rufino or Néctar <small>(~1.5 hr)</small></li>
+          <li>Early rest — full volcano day tomorrow</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Lodge — La Fortuna / Arenal
+            <a href="https://www.airbnb.com/s/La-Fortuna-de-San-Carlos--Costa-Rica/homes" target="_blank">Browse La Fortuna Airbnbs →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Transfer (boat): $25–35</span>
+            <span class="cost-tag">Food: $45–65</span>
+            <span class="cost-tag">Gas: $15–25</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 7</span>
+      <span class="day-title">Arenal Volcano Hike + Hot Springs</span>
+      <span class="day-location">La Fortuna / Arenal</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning — Volcano</div>
+        <ul class="activity-list">
+          <li>Arenal Volcano National Park — entry and hike <small>(~3–4 hr)</small></li>
+          <li>Sendero Los Tucanes trail (2.4 km) for best volcano views</li>
+          <li>Sendero Coladas trail passes old 1968 lava fields</li>
+          <li>Arrive early — volcano views often obscured by clouds after noon</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Lunch at a restaurant near the park <small>(~1 hr)</small></li>
+          <li>La Fortuna Waterfall hike — 500+ steps down and back up <small>(~1.5 hr)</small></li>
+          <li>Swim at the base of the 70m waterfall</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening — Hot Springs</div>
+        <ul class="activity-list">
+          <li><strong>Hot Springs</strong> — soak in volcanic thermal pools at sunset <small>(~2–3 hr)</small></li>
+          <li>Top options: Baldi Hot Springs (large, fun, affordable) or Tabacon Grand Spa (upscale, riverside)</li>
+          <li>Dinner at the hot springs resort or La Fortuna town <small>(~1–1.5 hr)</small></li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <p><strong>Hot Springs Tip:</strong> Tabacon is pricier (~$90+) but stunning — includes dinner. Baldi is more affordable (~$35–45) and has more pools. Both are excellent.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Free hot springs at Río Cholín (natural, no crowds) <small>(~1 hr)</small></li>
+          <li>White-water rafting on Río Toro or Sarapiquí <small>(~half day)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Lodge — La Fortuna / Arenal</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Park entry: $18</span>
+            <span class="cost-tag">Waterfall: $18</span>
+            <span class="cost-tag">Hot springs: $35–90</span>
+            <span class="cost-tag">Food: $50–70</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 8 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 8</span>
+      <span class="day-title">Arenal Activities — Lake, ATV or Canyoning</span>
+      <span class="day-location">La Fortuna / Arenal</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Kayaking or stand-up paddleboarding on Lago Arenal <small>(~2 hr)</small></li>
+          <li>Stunning volcano backdrop on calm mornings</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>ATV tour through jungle and volcanic terrain <small>(~2–3 hr)</small></li>
+          <li>OR Canyoning / rappelling waterfalls with Pure Trek or Desafío <small>(~3 hr)</small></li>
+          <li>Lunch in La Fortuna <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Return hot springs soak (if skipped last night) or relaxed evening <small>(~2 hr)</small></li>
+          <li>Dinner and drinks in La Fortuna</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Hanging bridges at Mistico Park <small>(~2 hr)</small></li>
+          <li>Wildlife/birding tour at dawn <small>(~2–3 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Lodge — La Fortuna / Arenal</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">ATV/Canyoning: $65–95</span>
+            <span class="cost-tag">Kayak: $25–40</span>
+            <span class="cost-tag">Food: $50–70</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 9 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 9</span>
+      <span class="day-title">Drive to Tamarindo — Pacific Beach Town</span>
+      <span class="day-location">La Fortuna → Tamarindo</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out and load car <small>(~30 min)</small></li>
+          <li>Drive La Fortuna → Tamarindo via Cañas <small>(~3.5–4 hr, 230 km)</small></li>
+          <li>Most of the drive is on paved Pan-American Highway</li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Check in to hotel / Airbnb near Tamarindo beach <small>(~20 min)</small></li>
+          <li>First walk on Tamarindo beach — long stretch of Pacific sand <small>(~1 hr)</small></li>
+          <li>Rent a surfboard or take a beginner surf lesson <small>(~1.5 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Sunset on the beach — Tamarindo has stunning Pacific sunsets <small>(~45 min)</small></li>
+          <li>Dinner at El Coconut or Nogui's on the beach strip <small>(~1.5 hr)</small></li>
+          <li>Evening drinks at Aqua Disco or Patagonia Bar <small>(~1–2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Airbnb — Tamarindo
+            <a href="https://www.airbnb.com/s/Tamarindo--Costa-Rica/homes" target="_blank">Browse Tamarindo Airbnbs →</a>
+          </div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Surf lesson: $35–55</span>
+            <span class="cost-tag">Food: $50–70</span>
+            <span class="cost-tag">Gas: $20–30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 10 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 10</span>
+      <span class="day-title">Tamarindo Beach Day + Surf + Snorkel</span>
+      <span class="day-location">Tamarindo</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Morning surf session — rent board or take lesson <small>(~2 hr)</small></li>
+          <li>Breakfast at Tamarindo Backpackers cafe or Green Papaya <small>(~45 min)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Day trip boat tour to Playa Conchal (snorkeling + beach) <small>(~3 hr)</small></li>
+          <li>OR drive to Playa Grande — leatherback sea turtle nesting area <small>(~20 min)</small></li>
+          <li>Lunch at Nogui's or a soda in town <small>(~1 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Sea turtle watching tour at Playa Grande (seasonal, check availability) <small>(~2 hr)</small></li>
+          <li>Final Tamarindo beach dinner and nightlife <small>(~2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Kayak tour of Tamarindo estuary (mangrove wildlife) <small>(~2 hr)</small></li>
+          <li>ATV tour to hidden beaches nearby <small>(~3 hr)</small></li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Airbnb — Tamarindo</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Boat/snorkel: $45–70</span>
+            <span class="cost-tag">Surf: $25–50</span>
+            <span class="cost-tag">Food: $50–70</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 11 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 11</span>
+      <span class="day-title">Tamarindo Exploration + Final Evening</span>
+      <span class="day-location">Tamarindo</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Slow morning or final sunrise beach walk <small>(~1 hr)</small></li>
+          <li>Visit Playa Langosta (quieter, just south of Tamarindo) <small>(~1.5 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Afternoon</div>
+        <ul class="activity-list">
+          <li>Shopping along Tamarindo main strip — local crafts, swimwear <small>(~1.5 hr)</small></li>
+          <li>Lunch at the market or beach restaurant <small>(~1 hr)</small></li>
+          <li>Final swim and beach time <small>(~2 hr)</small></li>
+        </ul>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Evening</div>
+        <ul class="activity-list">
+          <li>Farewell dinner — best meal of the trip <small>(~2 hr)</small></li>
+          <li>Try Pangas Beach Club or El Coconut for a special send-off</li>
+          <li>Drinks and dancing if energy remains</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Hotel / Airbnb — Tamarindo</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Food: $60–90</span>
+            <span class="cost-tag">Shopping: varies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 12 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-badge">Day 12</span>
+      <span class="day-title">Return to San José — Departure</span>
+      <span class="day-location">Tamarindo → San José</span>
+    </div>
+    <div class="day-body">
+      <div class="section-block">
+        <div class="section-label">Morning</div>
+        <ul class="activity-list">
+          <li>Check out, pack, and return car keys <small>(~30 min)</small></li>
+          <li>Drive Tamarindo → SJO Airport via Route 1 &amp; 27 <small>(~4–4.5 hr, 280 km)</small></li>
+          <li>Return rental car at SJO — allow 1–1.5 hr before flight</li>
+        </ul>
+      </div>
+      <div class="warning-block">
+        <p><strong>⏰ Flight Tip:</strong> Allow plenty of buffer time. Traffic entering San José can be slow, especially in the afternoon. Schedule flights for late afternoon or evening if possible.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Alternative</div>
+        <ul class="activity-list">
+          <li>Fly Tamarindo → SJO (Sansa Airlines, ~35 min) instead of driving <small>($80–130)</small></li>
+          <li>Stop in Liberia for lunch before the highway push</li>
+        </ul>
+      </div>
+      <div class="bottom-row">
+        <div class="info-chip">
+          <div class="info-chip-label">Accommodation</div>
+          <div class="info-chip-value">Departure day</div>
+        </div>
+        <div class="cost-chip">
+          <div class="cost-chip-label">Estimated Expenses</div>
+          <div class="cost-items">
+            <span class="cost-tag">Gas: $25–35</span>
+            <span class="cost-tag">Food: $20–40</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADVANCE BOOKING -->
+  <div class="booking-section">
+    <h2>Activities &amp; Bookings to Arrange in Advance</h2>
+    <div class="booking-priority">
+      <div class="priority-label high">High Priority</div>
+      <ul class="booking-list">
+        <li>Rental car (4WD) — book early</li>
+        <li>Manuel Antonio National Park tickets</li>
+        <li>All accommodation (fills quickly)</li>
+        <li>Zipline tour — Monteverde</li>
+        <li>Hot springs reservation (Tabacon)</li>
+      </ul>
+    </div>
+    <div class="booking-priority">
+      <div class="priority-label medium">Medium Priority</div>
+      <ul class="booking-list">
+        <li>Arenal Volcano hiking guide</li>
+        <li>La Fortuna Waterfall entry</li>
+        <li>Surf lessons — Tamarindo</li>
+        <li>Boat/snorkel tour — Playa Conchal</li>
+        <li>Jeep-Boat-Jeep transfer (if chosen)</li>
+        <li>Canyoning / ATV tours</li>
+      </ul>
+    </div>
+    <div class="booking-priority">
+      <div class="priority-label low">Plan Ahead</div>
+      <ul class="booking-list">
+        <li>Sea turtle tour (seasonal)</li>
+        <li>Night walk — Monteverde</li>
+        <li>Cloud forest guided tour</li>
+        <li>Kayak / SUP rentals</li>
+        <li>Travel insurance</li>
+        <li>International Driver's Permit (IDP)</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <a class="back-link" href="https://triptipsandtools.netlify.app/itineraries">← Back to Itineraries</a>
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top ↑</button>
+</div>
+
+</body>
+</html>

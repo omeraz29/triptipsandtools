@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trip Tips and Tools</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <div class="logo"></div>
+        <div>Trip Tips and Tools</div>
+      </a>
+
+      <div class="navlinks">
+        <a class="pill" href="itineraries.html">Itineraries</a>
+        <a class="pill" href="expense-tool.html">Expense Tool</a>
+        <a class="pill" href="#how">How it works</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container hero">
+    <div class="hero-grid">
+      <div class="card hero-left">
+        <div class="kicker">✈️ Plan smarter • Travel better</div>
+        <div class="h1">AI-powered itineraries + easy trip tools</div>
+        <p class="sub">
+          Trip Tips and Tools helps you build a clear travel plan and keep group expenses simple.
+          Start with a prebuilt itinerary or use tools to organize your trip in minutes.
+        </p>
+
+        <div class="btnrow">
+          <a class="btn primary" href="itineraries.html">Generate / Browse Itineraries →</a>
+          <a class="btn ghost" href="expense-tool.html">Split Trip Expenses</a>
+        </div>
+
+        <div style="height:12px"></div>
+        <div class="notice">
+          No account needed. Start free. Add affiliate links later when you’re ready.
+        </div>
+      </div>
+
+      <div class="card hero-right">
+        <div class="statgrid">
+          <div class="mini">
+            <div class="label">Best for</div>
+            <div class="big">Weekend → 2 weeks</div>
+          </div>
+          <div class="mini">
+            <div class="label">Trip style</div>
+            <div class="big">Relaxed • Balanced • Fast</div>
+          </div>
+          <div class="mini">
+            <div class="label">Tools</div>
+            <div class="big">Expense Splitter</div>
+          </div>
+          <div class="mini">
+            <div class="label">Output</div>
+            <div class="big">Day-by-day plan</div>
+          </div>
+        </div>
+
+        <div class="mini">
+          <div class="label">Quick idea (placeholder)</div>
+          <div class="big">Tokyo • Kyoto</div>
+          <div class="muted">Cherry blossoms, food, and neighborhoods.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section" id="how">
+    <div class="h2">How it works</div>
+    <p class="muted" style="margin-top:0">Three simple steps to get moving.</p>
+
+    <div class="grid3">
+      <div class="feature">
+        <div class="title">1) Pick a destination</div>
+        <p class="desc">Choose where you’re going and what you like to do.</p>
+      </div>
+      <div class="feature">
+        <div class="title">2) Get a clear plan</div>
+        <p class="desc">Browse prebuilt itineraries now (AI generation can be added next).</p>
+      </div>
+      <div class="feature">
+        <div class="title">3) Use trip tools</div>
+        <p class="desc">Split expenses with friends and keep the group organized.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section">
+    <div class="split">
+      <div class="feature">
+        <div class="title">Featured itineraries</div>
+        <p class="desc">Start with popular trips and customize later.</p>
+        <div style="height:10px"></div>
+        <a class="btn ghost" href="itineraries.html">View itineraries →</a>
+      </div>
+
+      <div class="feature">
+        <div class="title">Traveling with friends?</div>
+        <p class="desc">Instantly calculate who owes who. No awkward Venmo math.</p>
+        <div style="height:10px"></div>
+        <a class="btn primary" href="expense-tool.html">Try expense tool →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+      <div>© <span id="year"></span> Trip Tips and Tools</div>
+      <div class="muted">Built as a simple static site (easy to publish).</div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
