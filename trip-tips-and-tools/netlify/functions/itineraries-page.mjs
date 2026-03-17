@@ -62,6 +62,12 @@ export default async (req) => {
         <div style="height:10px"></div>
         <a class="btn ghost" href="/spain-itinerary.html">View itinerary</a>
       </div>
+      <div class="feature">
+        <div class="title">Thailand (10 Days)</div>
+        <p class="desc">Bangkok → Chiang Mai → Phi Phi Islands. Temples, elephant sanctuary, street food tour, and bioluminescent plankton snorkeling.</p>
+        <div style="height:10px"></div>
+        <a class="btn ghost" href="/thailand-itinerary.html">View itinerary</a>
+      </div>
     </div>
     <div style="height:14px"></div>
     <div class="notice">New itineraries are added regularly. Check back for more destinations!</div>
