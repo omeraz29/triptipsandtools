@@ -88,6 +88,45 @@
     </div>
   </div>
 
+  <!-- CONTACT SECTION -->
+  <div class="container section">
+    <div class="h2">Need help planning your trip?</div>
+    <p class="muted" style="margin-top:0; margin-bottom:18px;">Tell us where you want to go and we'll get back to you with personalized tips.</p>
+    <div class="feature" style="max-width:600px;">
+      <form name="contact" method="POST" netlify netlify-honeypot="bot-field" id="contactForm">
+        <input type="hidden" name="form-name" value="contact" />
+        <p style="display:none;"><input name="bot-field" /></p>
+
+        <div style="margin-bottom:12px;">
+          <label class="muted" style="display:block; font-weight:700; margin-bottom:6px;">Your name</label>
+          <input class="input" type="text" name="name" placeholder="e.g. Alex" required />
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label class="muted" style="display:block; font-weight:700; margin-bottom:6px;">Your email</label>
+          <input class="input" type="email" name="email" placeholder="you@example.com" required />
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label class="muted" style="display:block; font-weight:700; margin-bottom:6px;">Where do you want to go?</label>
+          <input class="input" type="text" name="destination" placeholder="e.g. Japan, Costa Rica, anywhere warm..." required />
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label class="muted" style="display:block; font-weight:700; margin-bottom:6px;">Tell us more</label>
+          <textarea class="input" name="message" rows="4" placeholder="How many people, how many days, what kind of trip are you looking for?" style="resize:vertical;" required></textarea>
+        </div>
+
+        <button class="btn primary" type="submit">Send Message →</button>
+      </form>
+
+      <div id="formSuccess" style="display:none; padding:16px; background:rgba(110,231,255,.08); border:1px solid rgba(110,231,255,.25); border-radius:14px; margin-top:12px;">
+        <div style="font-weight:900; margin-bottom:4px;">Message sent!</div>
+        <div class="muted">Thanks for reaching out — we'll get back to you soon.</div>
+      </div>
+    </div>
+  </div>
+
   <div class="container footer">
     <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
       <div>© <span id="year"></span> Trip Tips and Tools</div>
@@ -98,6 +137,19 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      try {
+        await fetch("/", { method: "POST", body: data });
+        form.style.display = "none";
+        document.getElementById("formSuccess").style.display = "block";
+      } catch {
+        alert("Something went wrong. Please try again.");
+      }
+    });
   </script>
 </body>
 </html>
