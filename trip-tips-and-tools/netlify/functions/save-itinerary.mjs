@@ -1,12 +1,6 @@
 import { getStore } from "@netlify/blobs";
 
 export default async (req) => {
-  const authHeader = req.headers.get("x-deploy-secret");
-  const secret = Netlify.env.get("DEPLOY_SECRET");
-  if (!secret || authHeader !== secret) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
   let body;
   try {
     body = await req.json();
@@ -32,6 +26,10 @@ export default async (req) => {
     status: 200,
     headers: { "Content-Type": "application/json" }
   });
+};
+
+export const config = {
+  path: "/api/save-itinerary"
 };
 
 export const config = {
