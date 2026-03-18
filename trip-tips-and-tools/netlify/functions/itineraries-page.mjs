@@ -35,14 +35,14 @@ export default async (req) => {
     .feature.card-cr .btn { border-color: rgba(76,175,80,0.4) !important; color: #a5d6a7 !important; background: rgba(76,175,80,0.1) !important; }
 
     .feature.card-es {
-      background: linear-gradient(135deg, #1e1005 0%, #2d1a08 100%);
-      border: 1px solid #4a3010 !important;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .feature.card-es:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(232,148,58,0.2); }
-    .feature.card-es .title { color: #f8d4a0; }
-    .feature.card-es .desc { color: #c4956a; }
-    .feature.card-es .btn { border-color: rgba(232,148,58,0.4) !important; color: #f4b96e !important; background: rgba(232,148,58,0.1) !important; }
+  background: linear-gradient(135deg, #1e0808 0%, #321010 100%);
+  border: 1px solid #6a1a1a !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature.card-es:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(226,75,74,0.2); }
+.feature.card-es .title { color: #f7c1c1; }
+.feature.card-es .desc { color: #c47070; }
+.feature.card-es .btn { border-color: rgba(226,75,74,0.4) !important; color: #f09595 !important; background: rgba(226,75,74,0.1) !important; }
 
     .feature.card-th {
       background: linear-gradient(135deg, #041515 0%, #082222 100%);
